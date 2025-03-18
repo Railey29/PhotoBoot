@@ -14,7 +14,7 @@ export default function useCapturedImage() {
       let count = 0;
 
       const captureWithDelay = () => {
-        if (count < 3 && webcamRef.current) {
+        if (count < 4 && webcamRef.current) {
           const imageSrc = webcamRef.current.getScreenshot();
           if (imageSrc) {
             photos.push(imageSrc);

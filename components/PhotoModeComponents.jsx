@@ -53,12 +53,12 @@ export default function PhotoModeComponents() {
             isCapturing ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          {isCapturing ? "Capturing..." : "Capture 3 Photos"}
+          {isCapturing ? "Capturing..." : "Capture 4 Photos"}
         </button>
       )}
 
-      {/* Display the captured images */}
-      <div className="absolute md:top-90 md:left-20 grid grid-cols-3 gap-4 mt-4">
+      {/* Display the captured images in a single row */}
+      <div className="absolute md:top-90 md:left-20 flex gap-4 mt-4">
         {capturedImages.map((image, index) => (
           <div key={index} className="flex flex-col items-center">
             <img

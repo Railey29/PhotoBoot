@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import html2canvas from "html2canvas";
-// Collage component with border styles
-const PhotoCollage = ({ capturedImages, borderStyle }) => {
+
+// PhotoStrip component with border styles
+const PhotoStrip = ({ capturedImages, borderStyle }) => {
   return (
-    <div
-      className={`flex flex-col items-center space-y-4 p-4 rounded-lg ${borderStyle}`}
-    >
+    <div className={`flex overflow-x-auto space-x-4 p-4 ${borderStyle}`}>
       {capturedImages.map((image, index) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ delay: index * 0.3, duration: 0.5 }}
           className={`rounded-lg p-2 ${borderStyle}`} // Apply selected border style
         >
@@ -27,8 +26,8 @@ const PhotoCollage = ({ capturedImages, borderStyle }) => {
   );
 };
 
-// Main component for the photo booth with drag-and-drop functionality and border choices
-export default function PhotoBooth() {
+// Main component for the photo strip with drag-and-drop functionality and border choices
+export default function PhotoStripBooth() {
   const [capturedImages, setCapturedImages] = useState([]);
   const [selectedBorder, setSelectedBorder] = useState(
     "border-8 border-pink-300"
@@ -71,13 +70,13 @@ export default function PhotoBooth() {
   };
 
   // Function to download collage as an image
-  const downloadCollage = () => {
-    const collage = document.querySelector("#collage-container");
-    if (collage) {
-      html2canvas(collage).then((canvas) => {
+  const downloadPhotoStrip = () => {
+    const strip = document.querySelector("#strip-container");
+    if (strip) {
+      html2canvas(strip).then((canvas) => {
         const link = document.createElement("a");
         link.href = canvas.toDataURL("image/jpeg");
-        link.download = "photo-collage.jpg";
+        link.download = "photo-strip.jpg";
         link.click();
       });
     }
@@ -94,7 +93,7 @@ export default function PhotoBooth() {
           Drag & Drop Images Here
         </h2>
         <p className="text-sm text-gray-500">
-          Drop your images below to create a collage
+          Drop your images below to create a photo strip
         </p>
       </div>
 
@@ -117,10 +116,10 @@ export default function PhotoBooth() {
         </select>
       </div>
 
-      {/* Drop area and collage */}
+      {/* Drop area and photo strip */}
       {capturedImages.length > 0 ? (
-        <div id="collage-container">
-          <PhotoCollage
+        <div id="strip-container" className="w-full">
+          <PhotoStrip
             capturedImages={capturedImages}
             borderStyle={selectedBorder}
           />
@@ -134,10 +133,10 @@ export default function PhotoBooth() {
       {/* Download button */}
       {capturedImages.length > 0 && (
         <button
-          onClick={downloadCollage}
+          onClick={downloadPhotoStrip}
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
         >
-          Download Collage
+          Download Photo Strip
         </button>
       )}
     </div>
